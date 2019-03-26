@@ -7,22 +7,17 @@ fi
 
 cd /tmp/
 
-if [[ ! -d HelloWorld ]]; then
-#    修改地址
-    git clone https://github.com/siggy86/HelloWorld.git
+if [[ ! -d tomcat-test ]]; then
+    git clone https://github.com/dingyu880623/tomcat-test.git
 fi
 
-cd /tmp/HelloWorld
+cd /tmp/tomcat-test/server
 
-mvn clean
+mvn clean package
 
-mvn compile
+if [[ ! -f server.war ]];then
+    echo "maven war failed..."
+    exit 1
+fi
 
-cd /tmp/HelloWorld/
-
-jar -cvf test.war ./*
-
-docker cp test.war   tomcat_new:/xxxxxx
-
-
-
+docker cp server.war tomcat_new:/usr/local/tomcat/webapps
