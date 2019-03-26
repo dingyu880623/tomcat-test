@@ -2,7 +2,7 @@
 
 rsp_docker=`docker ps | grep tomcat_new`
 if [[ "$rsp_docker" == "" ]]; then
-    docker run -name tomcat_new -it -p 8080:8080 tomcat
+    docker run -name tomcat_new -d -p 8080:8080 tomcat
 fi
 
 cd /tmp/
