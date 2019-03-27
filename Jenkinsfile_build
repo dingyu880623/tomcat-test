@@ -20,7 +20,7 @@ pipeline {
             echo "Test"
         }
         stage('Build') {
-            sh "server && mvn clean package"
+            sh "cd server && mvn clean package"
             sh "cp server/target/*.war docker/"
         }
         stage('Archive') {
