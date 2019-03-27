@@ -1,0 +1,29 @@
+#!/groovy
+
+WorkPath = '/root/tomcat-test'
+
+pipeline {
+    agent {
+      node {
+          label "host-vm"
+          customWorkspace "${WorkPath}"
+      }
+    }
+    stages {
+        stage('Init') {
+            echo "init"
+        }
+        stage('Build') {
+            echo "build"
+        }
+        stage('Archive') {
+            echo "Archive"
+        }
+        stage('AC'){
+            echo "ac"
+        }
+        stage('Publish') {
+            echo "publish"
+        }
+    }
+}
