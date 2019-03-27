@@ -30,7 +30,8 @@ pipeline {
             }
         }
         stage('Archive') {
-            script {
+            steps {
+                script {
                 sh "cd docker && docker build -t tomcat:my-latest"
                 sh "cd docker && docker save tomcat:my-latest > tomcat.tar"
                 out = sh(script: "[ -f $CompilePackagePath/tomcat.tar ]  && echo 'true' || echo 'false'", returnStdout: true)
@@ -44,8 +45,8 @@ pipeline {
                     sh "mv $CompilePackagePath/tomcat.tar $CompilePackagePath/tomcat.tar.$now"
                     sh "cp docker/tomcat.tar $CompilePackagePath/"
                 }
+                sh "docker rmi -f tomcat:my-latest"
             }
-            sh "docker rmi -f tomcat:my-latest"
         }
     }
 }
