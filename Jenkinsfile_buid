@@ -14,7 +14,7 @@ pipeline {
             echo "init"
         }
         stage('Build') {
-            echo "build"
+            echo "build 1"
         }
         stage('Archive') {
             echo "Archive"
