@@ -1,6 +1,6 @@
 #!/groovy
 
-WorkPath = '/root/tomcat-test'
+WorkPath = '/var/tomcat-test'
 
 pipeline {
     agent {
