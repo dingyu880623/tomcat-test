@@ -1,0 +1,45 @@
+#!/groovy
+
+WorkPath = '/var/tomcat-test'
+
+CompilePackagePath = '/var/package'
+
+PublishPath = '/var/publish'
+
+pipeline {
+    agent {
+      node {
+          label "host-vm"
+          customWorkspace "${WorkPath}"
+      }
+    }
+    stages {
+        stage('Init') {
+            script {
+                out = sh(script: "[ -f $CompilePackagePath/tomcat.tar ]  && echo 'true' || echo 'false'", returnStdout: true)
+                if(out == "true") {
+                    sh "cd $CompilePackage $$ docker load < tomcat.tar"
+                }
+            }
+        }
+        stage('Deploy') {
+            ansiblePlaybook(
+                playbook: 'ansible/deploy.yml'
+            )
+        }
+        stage('Test') {
+            echo "Do some test"
+        }
+        stage('Publish') {
+            sh "mkdir -p $PublishPath"
+            sh "cp $CompilePackage/tomcat.tar $PublishPath/"
+        }
+        stage('TearDown')
+        {
+            ansiblePlaybook(
+                playbook: 'ansible/rollback.yml'
+            )
+            sh(docker rmi -f tomcat:my-latest)
+        }
+    }
+}

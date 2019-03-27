@@ -2,6 +2,8 @@
 
 WorkPath = '/var/tomcat-test'
 
+CompilePackagePath = '/var/package'
+
 pipeline {
     agent {
       node {
@@ -12,18 +14,32 @@ pipeline {
     stages {
         stage('Init') {
             echo "init"
+            sh "mkdir -p $CompilePackage"
+        }
+        stage('Test') {
+            echo "Test"
         }
         stage('Build') {
-            echo "build 1"
+            sh "server && mvn clean package"
+            sh "cp server/target/*.war docker/"
         }
         stage('Archive') {
-            echo "Archive"
-        }
-        stage('AC'){
-            echo "ac"
-        }
-        stage('Publish') {
-            echo "publish"
+            script {
+                sh "cd docker && docker build -t tomcat:my-latest"
+                sh "cd docker && docker save tomcat:my-latest > tomcat.tar"
+                out = sh(script: "[ -f $CompilePackagePath/tomcat.tar ]  && echo 'true' || echo 'false'", returnStdout: true)
+                println out
+                if(out == "false") {
+                    sh "cp docker/tomcat.tar $CompilePackagePath/"
+                }
+                if(out == "true") {
+                    now = sh(script: "date +%s", returnStdout: true).trim()
+                    println now
+                    sh "mv $CompilePackagePath/tomcat.tar $CompilePackagePath/tomcat.tar.$now"
+                    sh "cp docker/tomcat.tar $CompilePackagePath/"
+                }
+            }
+            sh "docker rmi -f tomcat:my-latest"
         }
     }
 }

@@ -1,0 +1,7 @@
+---
+- hosts: 127.0.0.1
+  tasks:
+    - name: remove tomcat container
+      docker:
+        name: tomcat-test
+        state: absent
