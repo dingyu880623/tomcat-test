@@ -2,7 +2,7 @@
 
 rsp_docker=`docker ps | grep tomcat_new`
 if [[ "$rsp_docker" == "" ]]; then
-    docker run -name tomcat_new -d -p 8080:8080 tomcat
+    docker run --name tomcat_new -d -p 8080:8080 tomcat
 fi
 
 cd /tmp/
@@ -15,9 +15,9 @@ cd /tmp/tomcat-test/server
 
 mvn clean package
 
-if [[ ! -f server.war ]];then
+if [[ ! -f target/HelloWorld.war ]];then
     echo "maven war failed..."
     exit 1
 fi
 
-docker cp server.war tomcat_new:/usr/local/tomcat/webapps
+docker cp target/HelloWorld.war tomcat_new:/usr/local/tomcat/webapps
