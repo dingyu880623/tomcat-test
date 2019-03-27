@@ -13,15 +13,21 @@ pipeline {
     }
     stages {
         stage('Init') {
-            echo "init"
-            sh "mkdir -p $CompilePackage"
+            steps {
+                echo "init"
+                sh "mkdir -p $CompilePackage"
+            }
         }
         stage('Test') {
-            echo "Test"
+            steps {
+                echo "Test"
+            }
         }
         stage('Build') {
-            sh "cd server && mvn clean package"
-            sh "cp server/target/*.war docker/"
+            steps {
+                sh "cd server && mvn clean package"
+                sh "cp server/target/*.war docker/"
+            }
         }
         stage('Archive') {
             script {
