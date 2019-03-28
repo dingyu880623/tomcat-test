@@ -37,12 +37,11 @@ pipeline {
             sh "mkdir -p $PublishPath"
             sh "cp $CompilePackagePath/tomcat.tar $PublishPath/"
         }
-        stage('TearDown')
-        {
+        stage('TearDown') {
             ansiblePlaybook(
                 playbook: 'ansible/rollback.yml'
             )
-            sh(docker rmi -f tomcat:my-latest)
+            sh "docker rmi -f tomcat:my-latest"
         }
     }
 }
