@@ -36,11 +36,11 @@ pipeline {
                     sh "cd docker && docker save tomcat:my-latest > tomcat.tar"
                     out = sh(script: "[ -f ${CompilePackagePath}/tomcat.tar ]  && echo 'true' || echo 'false'", returnStdout: true)
                     println out
-                    if(out == "false") {
+                    if(out == false) {
                         println "1"
                         sh "cp docker/tomcat.tar ${CompilePackagePath}/"
                     }
-                    if(out == "true") {
+                    if(out == true) {
                         println "2"
                         now = sh(script: "date +%s", returnStdout: true).trim()
                         println now
