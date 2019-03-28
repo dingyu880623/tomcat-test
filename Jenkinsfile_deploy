@@ -14,6 +14,14 @@ pipeline {
       }
     }
     stages {
+        stage('TearDown') {
+            steps{
+                ansiblePlaybook(
+                    playbook: 'ansible/rollback.yml'
+                )
+                sh "docker rmi -f tomcat:my-latest"
+            }
+        }
         stage('Init') {
             steps {
                 script {
@@ -42,14 +50,6 @@ pipeline {
             steps {
                 sh "mkdir -p $PublishPath"
                 sh "mv $CompilePackagePath/tomcat.tar $PublishPath/"
-            }
-        }
-        stage('TearDown') {
-            steps{
-                ansiblePlaybook(
-                    playbook: 'ansible/rollback.yml'
-                )
-                sh "docker rmi -f tomcat:my-latest"
             }
         }
     }
