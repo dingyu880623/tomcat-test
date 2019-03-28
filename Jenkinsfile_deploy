@@ -19,6 +19,9 @@ pipeline {
                 out = sh(script: "[ -f $CompilePackagePath/tomcat.tar ]  && echo 'true' || echo 'false'", returnStdout: true)
                 if(out == "true") {
                     sh "cd $CompilePackage $$ docker load < tomcat.tar"
+                } else {
+                    println "tomcat tar is not exist in package path"
+                    sh "exit 1"
                 }
             }
         }
