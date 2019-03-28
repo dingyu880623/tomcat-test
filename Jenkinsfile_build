@@ -32,7 +32,7 @@ pipeline {
         stage('Archive') {
             steps {
                 script {
-                    sh "cd docker && docker build -t tomcat:my-latest"
+                    sh "cd docker && docker build -t tomcat:my-latest ."
                     sh "cd docker && docker save tomcat:my-latest > tomcat.tar"
                     out = sh(script: "[ -f ${CompilePackagePath}/tomcat.tar ]  && echo 'true' || echo 'false'", returnStdout: true)
                     println out
