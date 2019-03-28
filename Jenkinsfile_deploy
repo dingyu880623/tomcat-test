@@ -1,6 +1,6 @@
 #!/groovy
 
-WorkPath = '/var/tomcat-test'
+WorkPath = '/var/deploy-test/tomcat-test'
 
 CompilePackagePath = '/var/package'
 
