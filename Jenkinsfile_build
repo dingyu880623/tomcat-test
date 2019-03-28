@@ -37,9 +37,11 @@ pipeline {
                     out = sh(script: "[ -f ${CompilePackagePath}/tomcat.tar ]  && echo 'true' || echo 'false'", returnStdout: true)
                     println out
                     if(out == "false") {
+                        println "1"
                         sh "cp docker/tomcat.tar ${CompilePackagePath}/"
                     }
                     if(out == "true") {
+                        println "2"
                         now = sh(script: "date +%s", returnStdout: true).trim()
                         println now
                         sh "mv ${CompilePackagePath}/tomcat.tar ${CompilePackagePath}/tomcat.tar.$now"
