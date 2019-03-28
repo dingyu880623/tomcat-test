@@ -21,7 +21,7 @@
     ```
   修改业务代码后，直接执行同级目录下 home_build.sh 
   就可以通过xx.xx.xx.xx:8080查看对应该服务变化
-  * ![image](https://github.com/dingyu880623/tomcat-test/tree/master/png/hello.png)
+  * ![image](png/hello.png)
 
 
 
@@ -31,12 +31,12 @@
 
 
 * 添加自动构建任务（build）
-  * ![image](https://github.com/dingyu880623/tomcat-test/tree/master/png/build.png)
+  * ![image](png/build.png)
   * 当有代码merge时，会触发构建，对应的版本会推送到/var/package目录下
 
 
 
 * 添加定时部署任务
-  * ![image](https://github.com/dingyu880623/tomcat-test/tree/master/png/scm.png)
-  * ![image](https://github.com/dingyu880623/tomcat-test/tree/master/png/deploy.png)
-  版本会发布到/var/publish目录下
+  * ![image](png/scm.png)
+  * ![image](png/deploy.png)
+  * 版本会发布到/var/publish目录下
