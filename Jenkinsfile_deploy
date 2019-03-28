@@ -17,7 +17,7 @@ pipeline {
         stage('Init') {
             steps {
                 script {
-                    out = sh(script: "[ -f $CompilePackagePath/tomcat.tar ]  && echo 'true' || echo 'false'", returnStdout: true)
+                    out = sh(script: "[ -f $CompilePackagePath/tomcat.tar ]  && echo 'true' || echo 'false'", returnStdout: true).trim()
                     if(out == "true") {
                         sh "cd $CompilePackagePath && docker load < tomcat.tar"
                     } else {
