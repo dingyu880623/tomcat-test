@@ -7,9 +7,9 @@ fi
 
 cd /tmp/
 
-if [[ ! -d tomcat-test ]]; then
-    git clone https://github.com/dingyu880623/tomcat-test.git
-fi
+#if [[ ! -d tomcat-test ]]; then
+#    git clone https://github.com/dingyu880623/tomcat-test.git
+#fi
 
 cd /tmp/tomcat-test/server
 
