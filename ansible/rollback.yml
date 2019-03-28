@@ -4,4 +4,5 @@
     - name: remove tomcat container
       docker:
         name: tomcat-test
+        image: tomcat:my-latest
         state: absent
