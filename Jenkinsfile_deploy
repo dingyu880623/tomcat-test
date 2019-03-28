@@ -41,7 +41,7 @@ pipeline {
         stage('Publish') {
             steps {
                 sh "mkdir -p $PublishPath"
-                sh "cp $CompilePackagePath/tomcat.tar $PublishPath/"
+                sh "mv $CompilePackagePath/tomcat.tar $PublishPath/"
             }
         }
         stage('TearDown') {
