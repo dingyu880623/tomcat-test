@@ -15,33 +15,43 @@ pipeline {
     }
     stages {
         stage('Init') {
-            script {
-                out = sh(script: "[ -f $CompilePackagePath/tomcat.tar ]  && echo 'true' || echo 'false'", returnStdout: true)
-                if(out == "true") {
-                    sh "cd $CompilePackagePath && docker load < tomcat.tar"
-                } else {
-                    println "tomcat tar is not exist in package path"
-                    sh "exit 1"
+            steps {
+                script {
+                    out = sh(script: "[ -f $CompilePackagePath/tomcat.tar ]  && echo 'true' || echo 'false'", returnStdout: true)
+                    if(out == "true") {
+                        sh "cd $CompilePackagePath && docker load < tomcat.tar"
+                    } else {
+                        println "tomcat tar is not exist in package path"
+                        sh "exit 1"
+                    }
                 }
             }
         }
         stage('Deploy') {
-            ansiblePlaybook(
-                playbook: 'ansible/deploy.yml'
-            )
+            steps {
+                 ansiblePlaybook(
+                    playbook: 'ansible/deploy.yml'
+                 )
+            }
         }
         stage('Test') {
-            echo "Do some test"
+            steps {
+                echo "Do some test"
+            }
         }
         stage('Publish') {
-            sh "mkdir -p $PublishPath"
-            sh "cp $CompilePackagePath/tomcat.tar $PublishPath/"
+            steps {
+                sh "mkdir -p $PublishPath"
+                sh "cp $CompilePackagePath/tomcat.tar $PublishPath/"
+            }
         }
         stage('TearDown') {
-            ansiblePlaybook(
-                playbook: 'ansible/rollback.yml'
-            )
-            sh "docker rmi -f tomcat:my-latest"
+            steps{
+                ansiblePlaybook(
+                    playbook: 'ansible/rollback.yml'
+                )
+                sh "docker rmi -f tomcat:my-latest"
+            }
         }
     }
 }
