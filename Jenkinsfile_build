@@ -37,13 +37,13 @@ pipeline {
                     out = sh(script: "[ -f ${CompilePackagePath}/tomcat.tar ]  && echo 'true' || echo 'false'", returnStdout: true).trim()
                     println out
                     if(out == "false") {
-                        sh "cp docker/tomcat.tar ${CompilePackagePath}/"
+                        sh "mv docker/tomcat.tar ${CompilePackagePath}/"
                     }
                     if(out == "true") {
                         now = sh(script: "date +%s", returnStdout: true).trim()
                         println now
                         sh "mv ${CompilePackagePath}/tomcat.tar ${CompilePackagePath}/tomcat.tar.$now"
-                        sh "cp docker/tomcat.tar ${CompilePackagePath}/"
+                        sh "mv docker/tomcat.tar ${CompilePackagePath}/"
                     }
                     sh "docker rmi -f tomcat:my-latest"
                 }
