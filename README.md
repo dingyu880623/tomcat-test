@@ -40,3 +40,8 @@
   * ![image](png/scm.png)
   * ![image](png/deploy.png)
   * 版本会发布到/var/publish目录下
+  
+
+* 说明
+    * 可以使用k8s做高可用保证, 或者 nginx + docker的方式
+    * 监控部分可以通过原生的k8s的机制去做，或者用守护进程监控容器状态
