@@ -5,13 +5,13 @@ if [[ "$rsp_docker" == "" ]]; then
     docker run --name tomcat_new -d -p 8080:8080 tomcat
 fi
 
-cd /tmp/
-
-#if [[ ! -d tomcat-test ]]; then
+#if [[ ! -d /tmp/tomcat-test ]]; then
 #    git clone https://github.com/dingyu880623/tomcat-test.git
 #fi
 
-cd /tmp/tomcat-test/server
+cd "$(dirname "$0")"
+
+cd server
 
 mvn clean package
 
